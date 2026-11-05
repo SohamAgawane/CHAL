@@ -1,20 +1,31 @@
 {
-  "name": "frontend",
+  "name": "chal-frontend",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "Frontend for Chal, a city-based plan discovery app",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel index.html"
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-icons": "^5.6.0"
+    "@tanstack/react-query": "^5.62.0",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
-    "parcel": "^2.16.4"
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.0.0",
+    "typescript": "~5.6.3",
+    "vite": "^6.0.0"
   }
 }

@@ -1,0 +1,43 @@
+import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
+import fs from "fs";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const uploadOnCloudinary = async (
+  localFilePath: string
+): Promise<UploadApiResponse | null> => {
+  try {
+    if (!localFilePath) return null;
+
+    const response = await cloudinary.uploader.upload(localFilePath, {
+      resource_type: "auto",
+      folder: "chal-app",
+    });
+
+    // Delete local temp file after successful upload
+    fs.unlinkSync(localFilePath);
+    return response;
+  } catch (error) {
+    // Delete temp file even on failure
+    if (fs.existsSync(localFilePath)) {
+      fs.unlinkSync(localFilePath);
+    }
+    return null;
+  }
+};
+
+const deleteFromCloudinary = async (publicId: string) => {
+  try {
+    if (!publicId) return null;
+    const result = await cloudinary.uploader.destroy(publicId);
+    return result;
+  } catch (error) {
+    return null;
+  }
+};
+
+export { uploadOnCloudinary, deleteFromCloudinary };
