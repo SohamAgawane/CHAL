@@ -13,14 +13,30 @@ const app = express();
 app.use(helmet());
 
 //  CORS -
+const allowedOrigins = [
+  "https://chal-hyperlocal.vercel.app",
+  "http://localhost:1234",
+];
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:1234",
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      const isAllowed =
+        allowedOrigins.includes(origin) ||
+        /^https:\/\/chal-[a-z0-9-]+-sohamagavane-gmailcoms-projects\.vercel\.app$/.test(origin);
+
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   })
 );
-
 //  Body parsing 
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
