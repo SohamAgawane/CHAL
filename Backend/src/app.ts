@@ -1,10 +1,10 @@
 import express, { type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import helmet from "../node_modules/helmet/index.cjs";
+import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
 import compression from "compression";
 import morgan from "morgan";
-import rateLimit from "../node_modules/express-rate-limit/dist/index.cjs";
 import { ApiError } from "./utils/ApiError.js";
 
 const app = express();
